@@ -110,6 +110,7 @@
         "immutable": false,
         "label": "Virtual Private Cloud",
         "name": "vpc_name_tag",
+        "default":"DefaultVPC",
         "required": true,
         "secured": false,
         "type": "string"
@@ -120,6 +121,7 @@
         "immutable": false,
         "label": "Subnet Name",
         "name": "subnet_name",
+        "default":"DefaultSubnet",
         "required": true,
         "secured": false,
         "type": "string"
