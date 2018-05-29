@@ -31,7 +31,7 @@ variable "subnet_name" {
 
 variable "aws_image_size" {
   description = "AWS Image Instance Size"
-  default     = "t2.small"
+  default     = "t2.micro"
 }
 
 data "aws_vpc" "selected" {
