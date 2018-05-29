@@ -98,8 +98,20 @@ resource "aws_elb" "web" {
 }
 
 resource "aws_key_pair" "auth" {
-  key_name   = "${var.key_name}"
-  public_key = "${file(var.public_key_path)}"
+  key_name   = "${var.public_ssh_key_name}"
+  public_key = "${var.public_ssh_key}"
+}
+
+# Lookup for AMI based on image name and owner ID
+data "aws_ami" "aws_ami" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["${var.aws_image}*"]
+  }
+
+  owners = ["${var.aws_ami_owner_id}"]
 }
 
 resource "aws_instance" "web" {
@@ -116,7 +128,7 @@ resource "aws_instance" "web" {
 
   # Lookup the correct AMI based on the region
   # we specified
-  ami = "${lookup(var.aws_amis, var.aws_region)}"
+  ami = "${data.aws_ami.aws_ami.id}"
 
   # The name of our SSH keypair we created above.
   key_name = "${aws_key_pair.auth.id}"
